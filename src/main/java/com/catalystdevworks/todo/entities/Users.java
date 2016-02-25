@@ -25,9 +25,26 @@ public class Users {
 	private String userEmail;
 	
 	@NotNull
-	@Column(name = "user_password")
-	private String userPassword;
-	
+	@Column(name = "password")
+	private String password;
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	@Column
+	private boolean enabled;
+
+
+	public String getPassword() {
+		return password;
+	}
+
+
 	@NotNull
 	@Column(name = "user_firstname")
 	private String firstName;
@@ -35,6 +52,10 @@ public class Users {
 	@NotNull
 	@Column(name = "user_lastname")
 	private String lastName;
+
+	@Column
+	private String username;
+
 
 	@JsonIgnore
 	@Column(name="user_id")
@@ -65,14 +86,6 @@ public class Users {
 		this.userEmail = userEmail;
 	}
 
-	public String getUserPassword() {
-		return userPassword;
-	}
-
-	public void setUserPassword(String userPassword) {
-		this.userPassword = userPassword;
-	}
-
 	public String getFirstName() {
 		return firstName;
 	}
@@ -88,4 +101,16 @@ public class Users {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 }
