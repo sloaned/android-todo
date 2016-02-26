@@ -28,6 +28,11 @@ public class UserDaoImpl implements EntityCrudDao<Users> {
 	}
 
 	@Override
+	public List<Users> getAllObjects() {
+		return null;
+	}
+
+	@Override
 	public Users getSingleObject(int id) {
 		return em.createQuery("SELECT u FROM users u WHERE u.id = :id", Users.class)
 				.setParameter("id", id)

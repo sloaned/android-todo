@@ -25,6 +25,11 @@ public class UsersServiceImpl implements EntityCrudService<Users> {
 	}
 
 	@Override
+	public List<Users> getAllObjects() {
+		return null;
+	}
+
+	@Override
 	public Users getSingleObject(int id) {
 		return usersDaoImpl.getSingleObject(id);
 	}

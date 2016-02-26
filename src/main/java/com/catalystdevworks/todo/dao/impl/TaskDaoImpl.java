@@ -20,10 +20,20 @@ public class TaskDaoImpl implements EntityCrudDao<Task>{
 
 	@SuppressWarnings("unchecked")
 	@Override
+	public List<Task> getAllObjects() {
+		return em.createQuery("SELECT t FROM task t").getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<Task> getAllObjects(Integer id) {
 		return em.createQuery("SELECT t FROM task t WHERE user_id = :id")
 				.setParameter("id", id)
 				.getResultList();
+	}
+
+	public List<Task> getAllTasks() {
+		return em.createQuery("SELECT t FROM task t").getResultList();
 	}
 
 	@Override
@@ -45,9 +55,9 @@ public class TaskDaoImpl implements EntityCrudDao<Task>{
 
 	@Override
 	public boolean editObject(Task object) {
-		if(em.merge(object) instanceof Task){
+		if (em.merge(object) instanceof Task) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
 	}

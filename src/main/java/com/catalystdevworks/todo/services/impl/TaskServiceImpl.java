@@ -25,6 +25,12 @@ public class TaskServiceImpl implements EntityCrudService<Task> {
 	}
 
 	@Override
+	public List<Task> getAllObjects() {
+        return taskDaoImpl.getAllObjects();
+	}
+
+
+	@Override
 	public Task getSingleObject(int id) {
 		return taskDaoImpl.getSingleObject(id);
 	}
