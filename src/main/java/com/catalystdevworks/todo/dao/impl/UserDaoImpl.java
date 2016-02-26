@@ -13,7 +13,7 @@ import com.catalystdevworks.todo.entities.Users;
 
 @Repository
 @Transactional
-public class UserDaoImpl implements EntityCrudDao<Users> {
+public class UserDaoImpl{
 	
 	@PersistenceContext
 	private EntityManager em;
@@ -22,37 +22,25 @@ public class UserDaoImpl implements EntityCrudDao<Users> {
 		this.em = em;
 	}
 
-	@Override
 	public List<Users> getAllObjects(Integer id) {
 		return null;
 	}
 
-	@Override
+
 	public Users getSingleObject(int id) {
 		return em.createQuery("SELECT u FROM users u WHERE u.id = :id", Users.class)
 				.setParameter("id", id)
 				.getSingleResult();
 	}
 
-	@Override
 	public boolean createObject(Users object) {
-		if(em.merge(object) instanceof Users){
-			return true;
-		} else {
-			return false;
-		}
+		return em.merge(object) != null;
 	}
 
-	@Override
 	public boolean editObject(Users object) {
-		if(em.merge(object) instanceof Users){
-			return true;
-		} else {
-			return false;
-		}
+		return em.merge(object) != null;
 	}
 
-	@Override
 	public boolean deleteObject(int id) {
 		try{
 			em.createQuery("DELETE FROM users u WHERE u.id=:id")
@@ -62,5 +50,12 @@ public class UserDaoImpl implements EntityCrudDao<Users> {
 			System.out.println(e);
 			return false;
 		}
+	}
+
+	public Users getByUsername(String user_email) {
+		System.out.println(user_email);
+		return em.createQuery("SELECT u FROM users u WHERE u.userEmail = :user_email", Users.class)
+				.setParameter("user_email", user_email)
+				.getSingleResult();
 	}
 }

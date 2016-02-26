@@ -3,7 +3,7 @@ package com.catalystdevworks.todo.Security;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -11,15 +11,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.JdbcUserDetailsManager;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -30,26 +23,25 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@ComponentScan(basePackageClasses = CustomUserDetailsService.class)
 public class WebSecurityConfigurator extends WebSecurityConfigurerAdapter {
+//    @Autowired
+//    private DataSource datasource;
     @Autowired
-    private DataSource datasource;
+    CustomUserDetailsService customUserDetailsService;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        JdbcUserDetailsManager userDetailsService = new JdbcUserDetailsManager();
-        userDetailsService.setDataSource(datasource);
-        PasswordEncoder encoder = new BCryptPasswordEncoder();
+       // JdbcUserDetailsManager customUserDetailsService = new JdbcUserDetailsManager();
+        auth.userDetailsService(customUserDetailsService);
 
-        auth.jdbcAuthentication().dataSource(datasource).passwordEncoder(encoder)
-        .usersByUsernameQuery("select user_email, user_password, true from users where user_email=?");
+     //   customUserDetailsService.setDataSource(datasource);
+      //  customUserDetailsService.setAuthenticationManager(null);
+//        PasswordEncoder encoder = new BCryptPasswordEncoder();
+//        auth.jdbcAuthentication().dataSource(datasource).passwordEncoder(encoder)
+//        .usersByUsernameQuery("select user_email, user_password, true from users where user_email=?")
+//        .authoritiesByUsernameQuery("SELECT user_email, 'USER' FROM users WHERE user_email=?");
 
-//        if(!userDetailsService.userExists("user")) {
-//            List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-//            authorities.add(new SimpleGrantedAuthority("USER"));
-//            User userDetails = new User("user", encoder.encode("password"), authorities);
-//
-//            userDetailsService.createUser(userDetails);
-//        }
     }
 
     // http://stackoverflow.com/a/28272347 for the differences
@@ -63,10 +55,12 @@ public class WebSecurityConfigurator extends WebSecurityConfigurerAdapter {
         http
             .authorizeRequests()
                 .antMatchers("/resources/**","/registration*").permitAll() //allow resources and registration
-                .anyRequest().authenticated()
-                .and()
+                .anyRequest().permitAll()
+                .and().userDetailsService(customUserDetailsService)
             .formLogin()
-                .loginPage("/login").permitAll();
+                .loginPage("/login").defaultSuccessUrl("/homepage.html")
+                .failureUrl("/login?error").permitAll()
+            .and().csrf().disable();
     }
 
 }

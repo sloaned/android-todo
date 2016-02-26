@@ -1,7 +1,9 @@
 package com.catalystdevworks.todo.controllers;
 
+import com.catalystdevworks.todo.services.impl.UsersServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,11 +18,11 @@ import com.catalystdevworks.todo.utility.EndPointConstants;
 public class UsersController {
 
 	@Autowired
-	private EntityCrudService<Users> usersServiceImpl;
-	
-	public void setUserServiceImpl(EntityCrudService<Users> userServiceImpl) {
-		this.usersServiceImpl = userServiceImpl;
-	}
+	private UsersServiceImpl usersServiceImpl;
+
+//	public void setUserServiceImpl(EntityCrudService<Users> userServiceImpl) {
+//		this.usersServiceImpl = userServiceImpl;
+//	}
 	
 	@RequestMapping(value=EndPointConstants.USER_GET_DELETE_ENDPOINT, method = RequestMethod.GET)
 	public Users getSingleUser(@PathVariable int id){

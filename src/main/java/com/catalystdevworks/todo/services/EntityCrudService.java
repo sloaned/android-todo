@@ -1,5 +1,7 @@
 package com.catalystdevworks.todo.services;
 
+import org.springframework.security.core.userdetails.User;
+
 import java.util.List;
 
 public interface EntityCrudService<T> {
@@ -9,5 +11,5 @@ public interface EntityCrudService<T> {
 	public boolean createObject(T object);
 	public boolean editObject(T object);
 	public boolean deleteObject(int id);
-	
+
 }
