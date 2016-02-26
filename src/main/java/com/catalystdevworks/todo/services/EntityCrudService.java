@@ -1,15 +1,39 @@
 package com.catalystdevworks.todo.services;
 
+import com.catalystdevworks.todo.dao.EntityCrudDao;
+import com.catalystdevworks.todo.dao.impl.UserDaoImpl;
 import org.springframework.security.core.userdetails.User;
 
 import java.util.List;
 
-public interface EntityCrudService<T> {
+public abstract class EntityCrudService<T> {
 
-	public List<T> getAllObjects(Integer id);
-	public T getSingleObject(int id);
-	public boolean createObject(T object);
-	public boolean editObject(T object);
-	public boolean deleteObject(int id);
+
+	protected EntityCrudDao<T> dao;
+
+	public EntityCrudService(EntityCrudDao<T> dao) {
+		this.dao = dao;
+	}
+
+
+	public List<T> getAllObjects(Integer id){
+		return dao.getAllObjects(id);
+	}
+
+	public T getSingleObject(int id) {
+		return dao.getSingleObject(id);
+	}
+
+	public boolean createObject(T object) {
+		return dao.createObject(object);
+	}
+
+	public boolean editObject(T object) {
+		return dao.editObject(object);
+	}
+
+	public boolean deleteObject(int id) {
+		return dao.deleteObject(id);
+	}
 
 }

@@ -2,6 +2,7 @@ package com.catalystdevworks.todo.controllers;
 
 import java.util.List;
 
+import com.catalystdevworks.todo.services.impl.TaskServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,11 +18,11 @@ import com.catalystdevworks.todo.utility.EndPointConstants;
 public class TaskController {
 	
 	@Autowired
-	EntityCrudService<Task> taskServiceImpl;
+	TaskServiceImpl taskServiceImpl;
 	
-	public void setTaskServiceImpl(EntityCrudService<Task> taskServiceImpl){
-		this.taskServiceImpl = taskServiceImpl;
-	}
+//	public void setTaskServiceImpl(EntityCrudService<Task> taskServiceImpl){
+//		this.taskServiceImpl = taskServiceImpl;
+//	}
 	
 	@RequestMapping(value="/allTasks", method = RequestMethod.GET)
 	public List<Task> getAllTasks(){

@@ -2,8 +2,8 @@ package com.catalystdevworks.todo.controllers;
 
 import com.catalystdevworks.todo.services.impl.UsersServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.catalystdevworks.todo.entities.Users;
-import com.catalystdevworks.todo.services.EntityCrudService;
 import com.catalystdevworks.todo.utility.EndPointConstants;
 
 @RestController
@@ -42,5 +41,10 @@ public class UsersController {
 	@RequestMapping(value=EndPointConstants.USER_GET_DELETE_ENDPOINT, method=RequestMethod.DELETE)
 	public boolean deleteStore(@PathVariable int id){
 		return usersServiceImpl.deleteObject(id);
-	}	
+	}
+	@RequestMapping(value="/user", method=RequestMethod.GET)
+	public Object getCurrentUser(){
+		final Object user =  SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		return user;
+	}
 }

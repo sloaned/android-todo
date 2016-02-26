@@ -23,15 +23,12 @@ import javax.servlet.http.HttpSession;
 public class LoginController {
     @Autowired
     CustomAuthenticationProvider authenticationManager;
-//    @Autowired
-//    AuthenticationProvider authprov;
 
     @ResponseBody
     @RequestMapping(value="/login.json", method = RequestMethod.POST)
     public Boolean mosLogin(@RequestBody LoginRequest loginRequest, HttpServletRequest request) {
         Boolean resp;
-
-        System.out.println(String.format("%s  %s",loginRequest.getUsername(),loginRequest.getPassword()));
+//        System.out.println(String.format("%s  %s",loginRequest.getUsername(),loginRequest.getPassword()));
         
         try {
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword());
