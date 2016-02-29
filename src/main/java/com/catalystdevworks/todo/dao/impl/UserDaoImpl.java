@@ -21,7 +21,6 @@ public class UserDaoImpl  extends EntityCrudDao<Users>{
 	}
 
 	public Users getByUsername(String user_email) {
-		System.out.println(user_email);
 		return em.createQuery("SELECT u FROM users u WHERE u.userEmail = :user_email", Users.class)
 				.setParameter("user_email", user_email)
 				.getSingleResult();

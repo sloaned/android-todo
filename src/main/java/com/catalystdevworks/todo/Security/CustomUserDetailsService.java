@@ -1,31 +1,36 @@
 package com.catalystdevworks.todo.Security;
 
 import com.catalystdevworks.todo.entities.Users;
-import com.catalystdevworks.todo.services.EntityCrudService;
 import com.catalystdevworks.todo.services.impl.UsersServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  * Created by g on 2/26/16.
  */
 @Service("userDetailsService")
 public class CustomUserDetailsService implements UserDetailsService{
 
+    public UsersServiceImpl getUsersServiceImpl() {
+        return usersServiceImpl;
+    }
+
+    public void setUsersServiceImpl(UsersServiceImpl usersServiceImpl) {
+        this.usersServiceImpl = usersServiceImpl;
+    }
+
     @Autowired
     private UsersServiceImpl usersServiceImpl;
 
+
     @Override
-    public UserDetails loadUserByUsername(String username) {
+    public User loadUserByUsername(String username) {
+        assert username == null;
         Users user = usersServiceImpl.getByUsername(username);
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("USER"));
