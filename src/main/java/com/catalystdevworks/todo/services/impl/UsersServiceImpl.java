@@ -19,6 +19,7 @@ public class UsersServiceImpl extends EntityCrudService<Users>{
 	}
 
 	public Users getByUsername(String username) {
+		System.out.println("CALLED GETBYUSERNAME");
 		return ((UserDaoImpl)dao).getByUsername(username);
 	}
 }

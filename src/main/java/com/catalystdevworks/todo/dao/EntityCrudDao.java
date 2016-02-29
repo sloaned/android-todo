@@ -50,5 +50,4 @@ public abstract class EntityCrudDao<T> {
 		em.remove(getSingleObject(id));
 		return true;
 	}
-
 }
