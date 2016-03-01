@@ -2,6 +2,7 @@ package com.catalystdevworks.todo.Security;
 
 import com.catalystdevworks.todo.entities.LoginRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,12 +22,13 @@ import java.io.IOException;
 class StatelessLoginFilter extends AbstractAuthenticationProcessingFilter {
 
 	private final TokenAuthenticationService tokenAuthenticationService;
-	private final CustomUserDetailsService userDetailsService;
+	@Autowired
+	private CustomUserDetailsService userDetailsService;
 
 	protected StatelessLoginFilter(String urlMapping, TokenAuthenticationService tokenAuthenticationService,
-								   CustomUserDetailsService userDetailsService, AuthenticationManager authManager) {
+								    AuthenticationManager authManager) {
 		super(new AntPathRequestMatcher(urlMapping));
-		this.userDetailsService = userDetailsService;
+
 		this.tokenAuthenticationService = tokenAuthenticationService;
 		setAuthenticationManager(authManager);
 	}
@@ -36,6 +38,7 @@ class StatelessLoginFilter extends AbstractAuthenticationProcessingFilter {
 			throws AuthenticationException, IOException, ServletException {
 
 		final LoginRequest user = new ObjectMapper().readValue(request.getInputStream(), LoginRequest.class);
+		System.out.printf("%s %s",user.getUsername(),user.getPassword());
 		final UsernamePasswordAuthenticationToken loginToken = new UsernamePasswordAuthenticationToken(
 				user.getUsername(), user.getPassword());
 		return getAuthenticationManager().authenticate(loginToken);
@@ -54,5 +57,7 @@ class StatelessLoginFilter extends AbstractAuthenticationProcessingFilter {
 
 		// Add the authentication to the Security context
 		SecurityContextHolder.getContext().setAuthentication(userAuthentication);
+
+
 	}
 }

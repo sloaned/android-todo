@@ -14,11 +14,11 @@ public final class TokenHandler {
 
     private final String secret;
 
-    private final CustomUserDetailsService userService;
+    @Autowired
+    private CustomUserDetailsService userService;
 
-    public TokenHandler(String secret, CustomUserDetailsService userService) {
-        this.secret = secret;
-        this.userService = userService;
+    public TokenHandler() {
+        this.secret = "tooManySecrets";
     }
 
     public User parseUserFromToken(String token) {
@@ -27,7 +27,9 @@ public final class TokenHandler {
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
-        return (User) userService.loadUserByUsername(username);
+        System.out.println(username);
+        assert userService != null;
+        return userService.loadUserByUsername(username);
     }
 
     public String createTokenForUser(User user) {
@@ -35,5 +37,9 @@ public final class TokenHandler {
                 .setSubject(user.getUsername())
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
+    }
+
+    public void setUserService(CustomUserDetailsService userService) {
+        this.userService = userService;
     }
 }

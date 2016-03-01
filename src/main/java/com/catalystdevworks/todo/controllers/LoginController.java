@@ -1,7 +1,12 @@
 package com.catalystdevworks.todo.controllers;
 
 import com.catalystdevworks.todo.Security.CustomAuthenticationProvider;
+import com.catalystdevworks.todo.Security.CustomUserDetailsService;
+import com.catalystdevworks.todo.Security.TokenHandler;
 import com.catalystdevworks.todo.entities.LoginRequest;
+import com.catalystdevworks.todo.entities.Token;
+import com.catalystdevworks.todo.services.impl.UsersServiceImpl;
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,44 +31,54 @@ public class LoginController {
     @Autowired
     CustomAuthenticationProvider authenticationManager;
 
-    @ResponseBody
+    @Autowired
+    CustomUserDetailsService usersService;
+
+
     @RequestMapping(value="/login.json", method = RequestMethod.POST)
-    public ResponseEntity<Boolean> mosLogin(@RequestBody LoginRequest loginRequest, HttpServletRequest request) {
-        Boolean resp = false;
+    public @ResponseBody Token mosLogin(@RequestBody LoginRequest loginRequest, HttpServletRequest request) {
+        Boolean resp = true;
+        Token tk = null;
 ////        System.out.println(String.format("%s  %s",loginRequest.getUsername(),loginRequest.getPassword()));
 //
-//        try {
-//            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword());
-//
-//            token.setDetails(new WebAuthenticationDetails(request));
-//
-//            Authentication auth = authenticationManager.authenticate(token);
-//            SecurityContext securityContext = SecurityContextHolder.getContext();
-//
-//            securityContext.setAuthentication(auth);
-////            securityContext.getSessionCookieConfig().setMaxAge(600);
-//
-//            if(auth.isAuthenticated()){
-//                HttpSession session = request.getSession(true);
-//                session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
-//
-//                resp = true;
-//                System.out.println("Auth");
-//            }else{
-//                SecurityContextHolder.getContext().setAuthentication(null);
-//                resp = false;
-//                System.out.println("cred not right");
-//
+        try {
+            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword());
+
+            token.setDetails(new WebAuthenticationDetails(request));
+
+            Authentication auth = authenticationManager.authenticate(token);
+            SecurityContext securityContext = SecurityContextHolder.getContext();
+
+            securityContext.setAuthentication(auth);
+//            securityContext.getSessionCookieConfig().setMaxAge(600);
+
+            if(auth.isAuthenticated()){
+                HttpSession session = request.getSession(true);
+                session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
+
+                TokenHandler th = new TokenHandler();
+                tk = new Token(th.createTokenForUser(usersService.loadUserByUsername(loginRequest.getUsername())));
+                System.out.println("Auth");
+            }else{
+                SecurityContextHolder.getContext().setAuthentication(null);
+                resp = false;
+                System.out.println("cred not right");
+
+            }
+        } catch (Exception e) {
+            resp = false;
+//            for (StackTraceElement ee:e.getStackTrace()) {
+//                System.out.printf("%s %s\n", ee.getClassName(),ee.getLineNumber());
 //            }
-//        } catch (Exception e) {
-//            resp = false;
-////            for (StackTraceElement ee:e.getStackTrace()) {
-////                System.out.printf("%s %s\n", ee.getClassName(),ee.getLineNumber());
-////            }
-////            System.out.println("Error "+e.getMessage());
-//            throw e;
-//        }
-        ResponseEntity<Boolean> re = new ResponseEntity<Boolean>(resp? HttpStatus.ACCEPTED:HttpStatus.UNAUTHORIZED);
-        return re;
+//            System.out.println("Error "+e.getMessage());
+            throw e;
+        }
+//        TokenHandler th = new TokenHandler(usersService);
+//        Token token = new Token(th.createTokenForUser(usersService.loadUserByUsername(loginRequest.getUsername())));
+       // String re = new ResponseEntity<String>(HttpStatus.OK);
+   //     System.out.printf("Token : %s \n",token.getToken());
+
+        return tk;
     }
 }
+

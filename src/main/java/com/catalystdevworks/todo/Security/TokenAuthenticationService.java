@@ -15,8 +15,8 @@ public class TokenAuthenticationService {
 
     private final TokenHandler tokenHandler;
 
-    public TokenAuthenticationService(String secret, CustomUserDetailsService userService) {
-        tokenHandler = new TokenHandler(secret, userService);
+    public TokenAuthenticationService() {
+        tokenHandler = new TokenHandler();
     }
     public void addAuthentication(HttpServletResponse response, UserAuthentication authentication) {
         final User user = authentication.getDetails();

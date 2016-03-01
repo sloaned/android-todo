@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * Created by g on 2/26/16.
  */
-@Service("userDetailsService")
+@Service
 public class CustomUserDetailsService implements UserDetailsService{
 
     public UsersServiceImpl getUsersServiceImpl() {
@@ -29,8 +29,9 @@ public class CustomUserDetailsService implements UserDetailsService{
 
 
     @Override
-    public User loadUserByUsername(String username) {
+    public User loadUserByUsername(String username){
         assert username == null;
+        assert usersServiceImpl != null;
         Users user = usersServiceImpl.getByUsername(username);
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("USER"));

@@ -31,12 +31,11 @@ public class WebSecurityConfigurator extends WebSecurityConfigurerAdapter {
     @Autowired
     SuccessHandler successHandler;
     private final TokenAuthenticationService tokenAuthenticationService;
-    @Autowired
-    private CustomUserDetailsService userService;
+
 
     public WebSecurityConfigurator() {
         super(true);
-        tokenAuthenticationService = new TokenAuthenticationService("tooManySecrets", userService);
+        tokenAuthenticationService = new TokenAuthenticationService();
     }
 
     @Override
@@ -87,7 +86,7 @@ public class WebSecurityConfigurator extends WebSecurityConfigurerAdapter {
                 .anyRequest().hasRole("USER").and()
 
                 // custom JSON based authentication by POST of {"username":"<name>","password":"<password>"} which sets the token header upon authentication
-                .addFilterBefore(new StatelessLoginFilter("/login.json", tokenAuthenticationService, userService, authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new StatelessLoginFilter("/login", tokenAuthenticationService, authenticationManager()), UsernamePasswordAuthenticationFilter.class)
 
                 // custom Token based authentication based on the header previously given to the client
                 .addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService), UsernamePasswordAuthenticationFilter.class);
