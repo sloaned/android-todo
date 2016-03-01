@@ -33,6 +33,8 @@ public class LoginController {
 
     @Autowired
     CustomUserDetailsService usersService;
+    @Autowired
+    private TokenHandler th;
 
 
     @RequestMapping(value="/login.json", method = RequestMethod.POST)
@@ -56,7 +58,7 @@ public class LoginController {
                 HttpSession session = request.getSession(true);
                 session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
 
-                TokenHandler th = new TokenHandler();
+
                 tk = new Token(th.createTokenForUser(usersService.loadUserByUsername(loginRequest.getUsername())));
                 System.out.println("Auth");
             }else{

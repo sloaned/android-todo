@@ -28,20 +28,16 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         UserDetails user = userService.loadUserByUsername(username);
 
-        System.out.printf("%s %s : %s %s",username,password,user.getUsername(),user.getPassword());
-
-        if (!user.getUsername().equalsIgnoreCase(username)) {
+        if (!user.getUsername().equalsIgnoreCase(username))
             throw new BadCredentialsException("Username not found.");
-        }
 
-        if (!password.equals(user.getPassword())) {
+
+        if (!password.equals(user.getPassword()))
             throw new BadCredentialsException("Wrong password.");
-        }
 
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("USER"));
 
-        System.out.println("HEY I WAS USED");
         return new UsernamePasswordAuthenticationToken(username, password, authorities);
     }
 

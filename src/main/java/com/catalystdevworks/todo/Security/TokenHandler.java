@@ -5,21 +5,24 @@ import com.google.common.base.Preconditions;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by g on 2/29/16.
  */
+@Component
+@Scope(BeanDefinition.SCOPE_SINGLETON)
 public final class TokenHandler {
 
-    private final String secret;
+    private final String secret  = "tooManySecrets";
 
     @Autowired
     private CustomUserDetailsService userService;
 
-    public TokenHandler() {
-        this.secret = "tooManySecrets";
-    }
 
     public User parseUserFromToken(String token) {
         String username = Jwts.parser()
@@ -28,7 +31,7 @@ public final class TokenHandler {
                 .getBody()
                 .getSubject();
         System.out.println(username);
-        assert userService != null;
+
         return userService.loadUserByUsername(username);
     }
 

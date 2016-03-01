@@ -30,12 +30,10 @@ public class CustomUserDetailsService implements UserDetailsService{
 
     @Override
     public User loadUserByUsername(String username){
-        assert username == null;
-        assert usersServiceImpl != null;
         Users user = usersServiceImpl.getByUsername(username);
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("USER"));
-        System.out.println("LOADED");
+
         return new User(user.getUserEmail(),user.getPassword(),true,true,true,true,authorities);
     }
 
