@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity(name = "users")
+@Entity
 public class Users {
 
 	@Id

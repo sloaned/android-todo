@@ -31,7 +31,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
         if (!user.getUsername().equalsIgnoreCase(username))
             throw new BadCredentialsException("Username not found.");
 
-
         if (!password.equals(user.getPassword()))
             throw new BadCredentialsException("Wrong password.");
 
@@ -42,7 +41,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     }
 
     public boolean supports(Class<?> arg0) {
-        System.out.println("I SUpPORT");
         return true;
     }
 

@@ -22,8 +22,6 @@ import java.io.IOException;
 class StatelessLoginFilter extends AbstractAuthenticationProcessingFilter {
 
 	private final TokenAuthenticationService tokenAuthenticationService;
-	@Autowired
-	private CustomUserDetailsService userDetailsService;
 
 	protected StatelessLoginFilter(String urlMapping, TokenAuthenticationService tokenAuthenticationService,
 								    AuthenticationManager authManager) {
@@ -38,9 +36,9 @@ class StatelessLoginFilter extends AbstractAuthenticationProcessingFilter {
 			throws AuthenticationException, IOException, ServletException {
 
 		final LoginRequest user = new ObjectMapper().readValue(request.getInputStream(), LoginRequest.class);
-		System.out.printf("%s %s",user.getUsername(),user.getPassword());
-		final UsernamePasswordAuthenticationToken loginToken = new UsernamePasswordAuthenticationToken(
-				user.getUsername(), user.getPassword());
+
+		final UsernamePasswordAuthenticationToken loginToken = new UsernamePasswordAuthenticationToken
+				(user.getUsername(), user.getPassword());
 		return getAuthenticationManager().authenticate(loginToken);
 	}
 

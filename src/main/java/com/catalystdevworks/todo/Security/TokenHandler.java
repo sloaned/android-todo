@@ -16,10 +16,8 @@ import org.springframework.stereotype.Component;
 public final class TokenHandler {
 
     private final String secret  = "tooManySecrets";
-
     @Autowired
     private CustomUserDetailsService userService;
-
 
     public User parseUserFromToken(String token) {
         String username = Jwts.parser()
@@ -27,7 +25,6 @@ public final class TokenHandler {
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
-        System.out.println(username);
 
         return userService.loadUserByUsername(username);
     }

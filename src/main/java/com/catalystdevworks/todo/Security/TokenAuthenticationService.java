@@ -31,13 +31,10 @@ public class TokenAuthenticationService {
     public Authentication getAuthentication(HttpServletRequest request) {
         final String token = request.getHeader(AUTH_HEADER_NAME);
 
-
         if (token != null) {
             final User user = tokenHandler.parseUserFromToken(token);
-            System.out.println("TOKEN: "+user.getUsername());
-            if (user != null) {
+            if (user != null)
                 return new UserAuthentication(user);
-            }
         }
         return null;
     }

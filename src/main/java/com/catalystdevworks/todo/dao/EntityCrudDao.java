@@ -23,7 +23,7 @@ public abstract class EntityCrudDao<T> {
 		this.entity = entity;
 	}
 	private String getSelect(){
-		return "SELECT x from  "+ table;
+		return "SELECT x from "+ table;
 	}
 
 	public List<T> getAllObjects(Integer id){

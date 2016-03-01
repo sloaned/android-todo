@@ -16,14 +16,6 @@ import java.util.List;
 @Service
 public class CustomUserDetailsService implements UserDetailsService{
 
-    public UsersServiceImpl getUsersServiceImpl() {
-        return usersServiceImpl;
-    }
-
-    public void setUsersServiceImpl(UsersServiceImpl usersServiceImpl) {
-        this.usersServiceImpl = usersServiceImpl;
-    }
-
     @Autowired
     private UsersServiceImpl usersServiceImpl;
 
@@ -35,6 +27,14 @@ public class CustomUserDetailsService implements UserDetailsService{
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
         return new User(user.getUserEmail(),user.getPassword(),true,true,true,true,authorities);
+    }
+
+    public UsersServiceImpl getUsersServiceImpl() {
+        return usersServiceImpl;
+    }
+
+    public void setUsersServiceImpl(UsersServiceImpl usersServiceImpl) {
+        this.usersServiceImpl = usersServiceImpl;
     }
 
 }
