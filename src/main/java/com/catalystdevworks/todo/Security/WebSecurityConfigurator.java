@@ -30,12 +30,14 @@ public class WebSecurityConfigurator extends WebSecurityConfigurerAdapter {
     CustomUserDetailsService customUserDetailsService;
     @Autowired
     SuccessHandler successHandler;
-    private final TokenAuthenticationService tokenAuthenticationService;
+    @Autowired
+    private TokenAuthenticationService tokenAuthenticationService;
 
 
     public WebSecurityConfigurator() {
         super(true);
-        tokenAuthenticationService = new TokenAuthenticationService();
+        System.out.println(successHandler == null);
+       // tokenAuthenticationService = new TokenAuthenticationService();
     }
 
     @Override
@@ -77,10 +79,10 @@ public class WebSecurityConfigurator extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/login.json").permitAll()
 
                 //allow anonymous GETs to API
-                .antMatchers(HttpMethod.GET, "/api/**").permitAll()
+              //  .antMatchers(HttpMethod.GET, "/api/**").permitAll()
 
                 //defined Admin only API area
-                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/task/**").hasRole("USER")
 
                 //all other request need to be authenticated
                 .anyRequest().hasRole("USER").and()

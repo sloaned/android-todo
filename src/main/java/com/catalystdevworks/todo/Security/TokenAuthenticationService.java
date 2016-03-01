@@ -3,6 +3,7 @@ package com.catalystdevworks.todo.Security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Created by g on 2/29/16.
  */
+@Service
 public class TokenAuthenticationService {
 
     private static final String AUTH_HEADER_NAME = "X-AUTH-TOKEN";
@@ -28,9 +30,11 @@ public class TokenAuthenticationService {
 
     public Authentication getAuthentication(HttpServletRequest request) {
         final String token = request.getHeader(AUTH_HEADER_NAME);
+
+
         if (token != null) {
-            System.out.println(tokenHandler == null);
             final User user = tokenHandler.parseUserFromToken(token);
+            System.out.println("TOKEN: "+user.getUsername());
             if (user != null) {
                 return new UserAuthentication(user);
             }

@@ -1,7 +1,5 @@
 package com.catalystdevworks.todo.Security;
 
-import com.catalystdevworks.todo.services.impl.UsersServiceImpl;
-import com.google.common.base.Preconditions;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +7,6 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 /**
  * Created by g on 2/29/16.
