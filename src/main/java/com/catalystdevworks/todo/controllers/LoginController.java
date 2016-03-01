@@ -39,7 +39,6 @@ public class LoginController {
 
     @RequestMapping(value="/login.json", method = RequestMethod.POST)
     public @ResponseBody Token mosLogin(@RequestBody LoginRequest loginRequest, HttpServletRequest request) {
-        Boolean resp = true;
         Token tk = null;
 ////        System.out.println(String.format("%s  %s",loginRequest.getUsername(),loginRequest.getPassword()));
 //
@@ -63,12 +62,11 @@ public class LoginController {
                 System.out.println("Auth");
             }else{
                 SecurityContextHolder.getContext().setAuthentication(null);
-                resp = false;
+
                 System.out.println("cred not right");
 
             }
         } catch (Exception e) {
-            resp = false;
 //            for (StackTraceElement ee:e.getStackTrace()) {
 //                System.out.printf("%s %s\n", ee.getClassName(),ee.getLineNumber());
 //            }

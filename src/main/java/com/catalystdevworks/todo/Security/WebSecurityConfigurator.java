@@ -62,7 +62,7 @@ public class WebSecurityConfigurator extends WebSecurityConfigurerAdapter {
             .anyRequest().hasRole("USER").and()
 
             // custom JSON based authentication by POST of {"username":"<name>","password":"<password>"} which sets the token header upon authentication
-            .addFilterBefore(new StatelessLoginFilter("/login", tokenAuthenticationService, authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(new StatelessLoginFilter(tokenAuthenticationService, authenticationManager()), UsernamePasswordAuthenticationFilter.class)
 
             // custom Token based authentication based on the header previously given to the client
             .addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService), UsernamePasswordAuthenticationFilter.class);

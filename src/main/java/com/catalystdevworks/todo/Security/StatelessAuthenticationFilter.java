@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
- * Created by g on 2/29/16.
+ * grabs a token from the header parses it and then sets the SecurityContext to the curent user
  */
 public class StatelessAuthenticationFilter extends GenericFilterBean {
 
@@ -27,9 +27,12 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
             throws IOException, ServletException {
         SecurityContextHolder.getContext().setAuthentication(
-                tokenAuthenticationService.getAuthentication((HttpServletRequest) request));
+                tokenAuthenticationService.getAuthentication((HttpServletRequest) request)
+        );
 
+        //continue chain
         filterChain.doFilter(request, response);
+        //after the chain clear the context
         SecurityContextHolder.getContext().setAuthentication(null);
     }
 }

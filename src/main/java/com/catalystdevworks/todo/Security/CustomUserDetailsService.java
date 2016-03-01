@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 /**
- * Created by g on 2/26/16.
+ * Loads a USERS from the database and transforms it to USER
  */
 @Service
 public class CustomUserDetailsService implements UserDetailsService{

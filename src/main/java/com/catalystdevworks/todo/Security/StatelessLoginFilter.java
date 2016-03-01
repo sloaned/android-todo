@@ -1,15 +1,14 @@
 package com.catalystdevworks.todo.Security;
 
 import com.catalystdevworks.todo.entities.LoginRequest;
+import com.catalystdevworks.todo.entities.UserAuthentication;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
@@ -19,13 +18,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Login Filter intercepts request to /login and looks for a LoginRequest object
+ * and attempts authentication
+ */
 class StatelessLoginFilter extends AbstractAuthenticationProcessingFilter {
 
 	private final TokenAuthenticationService tokenAuthenticationService;
 
-	protected StatelessLoginFilter(String urlMapping, TokenAuthenticationService tokenAuthenticationService,
-								    AuthenticationManager authManager) {
-		super(new AntPathRequestMatcher(urlMapping));
+	protected StatelessLoginFilter(TokenAuthenticationService tokenAuthenticationService, AuthenticationManager authManager) {
+
+		super(new AntPathRequestMatcher("/login"));
 
 		this.tokenAuthenticationService = tokenAuthenticationService;
 		setAuthenticationManager(authManager);
@@ -34,11 +37,12 @@ class StatelessLoginFilter extends AbstractAuthenticationProcessingFilter {
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
 			throws AuthenticationException, IOException, ServletException {
-
+		//Parse request
 		final LoginRequest user = new ObjectMapper().readValue(request.getInputStream(), LoginRequest.class);
-
+		//create a Token with the username and password from the client
 		final UsernamePasswordAuthenticationToken loginToken = new UsernamePasswordAuthenticationToken
 				(user.getUsername(), user.getPassword());
+		//attempt authentication and return the result
 		return getAuthenticationManager().authenticate(loginToken);
 	}
 

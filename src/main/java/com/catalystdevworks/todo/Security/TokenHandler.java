@@ -13,6 +13,10 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Scope(BeanDefinition.SCOPE_SINGLETON)
+/**
+ * Creates or parses a token to get the encrypted username
+ * called By the TokenService
+ */
 public final class TokenHandler {
 
     private final String secret  = "tooManySecrets";
@@ -25,7 +29,6 @@ public final class TokenHandler {
                 .parseClaimsJws(token)
                 .getBody()
                 .getSubject();
-
         return userService.loadUserByUsername(username);
     }
 

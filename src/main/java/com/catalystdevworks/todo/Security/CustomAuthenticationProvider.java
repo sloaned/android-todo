@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by g on 2/26/16.
+ * Authenticats a User via checking username and password matches whats in the database
  */
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
@@ -23,8 +23,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     private CustomUserDetailsService userService;
 
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+
         String username = authentication.getName();
-        String password = (String) authentication.getCredentials();
+        String password = authentication.getCredentials().toString();
 
         UserDetails user = userService.loadUserByUsername(username);
 
