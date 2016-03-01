@@ -32,7 +32,7 @@ public class CustomUserDetailsService implements UserDetailsService{
     public User loadUserByUsername(String username){
         Users user = usersServiceImpl.getByUsername(username);
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ADMIN"));
+        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
 
         return new User(user.getUserEmail(),user.getPassword(),true,true,true,true,authorities);
     }

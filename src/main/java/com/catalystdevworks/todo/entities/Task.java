@@ -12,7 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 
-@Entity(name = "task")
+@Entity(name = "Task")
 public class Task {
 	
 	@Id
