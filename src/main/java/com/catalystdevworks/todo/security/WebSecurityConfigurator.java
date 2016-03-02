@@ -22,7 +22,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @Configuration
 @WebAppConfiguration
 @EnableWebSecurity
-
 public class WebSecurityConfigurator extends WebSecurityConfigurerAdapter {
     @Autowired
     UserDetailService userDetailService;

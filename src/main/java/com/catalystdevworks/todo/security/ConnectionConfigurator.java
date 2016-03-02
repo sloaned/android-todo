@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
  * Sets up the servlet to use ssl and https
  */
 @Configuration
-public class SecondConfigurator {
+public class ConnectionConfigurator {
        private Connector initiateHttpConnector() {
         Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
         connector.setScheme("https");
