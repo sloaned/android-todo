@@ -10,15 +10,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Created by g on 3/1/16.
+ * Sets up the servlet to use ssl and ht
  */
 @Configuration
 public class SecondConfigurator {
        private Connector initiateHttpConnector() {
         Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
-        connector.setScheme("http");
+        connector.setScheme("https");
         connector.setPort(8080);
-        connector.setSecure(false);
+        connector.setSecure(true);
         connector.setRedirectPort(8443);
 
         return connector;
