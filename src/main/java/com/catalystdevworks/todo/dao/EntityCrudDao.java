@@ -6,33 +6,31 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.ArrayList;
 import java.util.List;
 
 @Transactional
 @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 public abstract class EntityCrudDao<T> {
 
-	private final Class<T> entity;
 	@PersistenceContext
 	protected EntityManager em;
+	private final Class<T> entity;
 	private String table;
 
 	public EntityCrudDao(Class<T> entity) {
 		this.table = entity.getSimpleName();
 		this.entity = entity;
 	}
-	private String getSelect(){
+	protected String getSelectStatement(){
 		return "SELECT x from "+ table;
 	}
 
 	public List<T> getAllObjects(Integer id){
-		return em.createQuery(getSelect() +" x", entity).getResultList();
+		return em.createQuery(getSelectStatement() +" x", entity).getResultList();
 	}
 
-
 	public T getSingleObject(int id) {
-		return em.createQuery(getSelect() +" x where x.id = :id", entity)
+		return em.createQuery(getSelectStatement() +" x where x.id = :id", entity)
 				.setParameter("id",id).getSingleResult();
 	}
 

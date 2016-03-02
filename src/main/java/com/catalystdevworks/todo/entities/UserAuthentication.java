@@ -1,4 +1,4 @@
-package com.catalystdevworks.todo.Security;
+package com.catalystdevworks.todo.entities;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;

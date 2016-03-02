@@ -1,5 +1,6 @@
-package com.catalystdevworks.todo.Security;
+package com.catalystdevworks.todo.security;
 
+import com.catalystdevworks.todo.services.impl.UserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -14,17 +15,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by g on 2/26/16.
+ * Authenticats a User via checking username and password matches whats in the database
  */
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
-    private CustomUserDetailsService userService;
+    private UserDetailService userService;
 
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+
         String username = authentication.getName();
-        String password = (String) authentication.getCredentials();
+        String password = authentication.getCredentials().toString();
 
         UserDetails user = userService.loadUserByUsername(username);
 

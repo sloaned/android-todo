@@ -1,7 +1,7 @@
 package com.catalystdevworks.todo.entities;
 
 /**
- * Created by g on 2/29/16.
+ *
  */
 public class Token {
     public Token(String token) {

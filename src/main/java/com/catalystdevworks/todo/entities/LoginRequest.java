@@ -1,7 +1,7 @@
 package com.catalystdevworks.todo.entities;
 
 /**
- * Created by g on 2/25/16.
+ *
  */
 public class LoginRequest {
     private String username;

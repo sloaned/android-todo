@@ -1,7 +1,7 @@
-package com.catalystdevworks.todo.Security;
+package com.catalystdevworks.todo.security;
 
+import com.catalystdevworks.todo.services.impl.TokenAuthenticationService;
 import com.google.common.base.Preconditions;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 /**
- * Created by g on 2/29/16.
+ * grabs a token from the header parses it and then sets the SecurityContext to the curent user
  */
 public class StatelessAuthenticationFilter extends GenericFilterBean {
 
@@ -27,9 +27,12 @@ public class StatelessAuthenticationFilter extends GenericFilterBean {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
             throws IOException, ServletException {
         SecurityContextHolder.getContext().setAuthentication(
-                tokenAuthenticationService.getAuthentication((HttpServletRequest) request));
+                tokenAuthenticationService.getAuthentication((HttpServletRequest) request)
+        );
 
+        //continue chain
         filterChain.doFilter(request, response);
+        //after the chain clear the context
         SecurityContextHolder.getContext().setAuthentication(null);
     }
 }

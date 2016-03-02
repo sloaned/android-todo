@@ -1,5 +1,7 @@
-package com.catalystdevworks.todo.Security;
+package com.catalystdevworks.todo.services.impl;
 
+import com.catalystdevworks.todo.security.TokenHandler;
+import com.catalystdevworks.todo.entities.UserAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
@@ -9,13 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by g on 2/29/16.
+ * Gets a token from the header OR adds it to the header if this is the first time
  */
 @Service
 public class TokenAuthenticationService {
 
     private static final String AUTH_HEADER_NAME = "X-AUTH-TOKEN";
-
     public void setTokenHandler(TokenHandler tokenHandler) {
         this.tokenHandler = tokenHandler;
     }

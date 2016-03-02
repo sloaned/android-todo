@@ -20,10 +20,6 @@ public class TaskController {
 	@Autowired
 	TaskServiceImpl taskServiceImpl;
 	
-//	public void setTaskServiceImpl(EntityCrudService<Task> taskServiceImpl){
-//		this.taskServiceImpl = taskServiceImpl;
-//	}
-	
 	@RequestMapping(value="/allTasks", method = RequestMethod.GET)
 	public List<Task> getAllTasks(){
 		return null;

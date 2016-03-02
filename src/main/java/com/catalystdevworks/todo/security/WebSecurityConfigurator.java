@@ -1,17 +1,17 @@
-package com.catalystdevworks.todo.Security;
+package com.catalystdevworks.todo.security;
 
 
+import com.catalystdevworks.todo.services.impl.TokenAuthenticationService;
+import com.catalystdevworks.todo.services.impl.UserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 
 /**
@@ -20,10 +20,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 //http://docs.spring.io/spring-security/site/docs/3.2.x/guides/form.html#setting-up-the-sample
 //https://github.com/eugenp/tutorials/blob/master/spring-security-login-and-registration/src/main/java/org/baeldung/spring/SecSecurityConfig.java
 @Configuration
+@WebAppConfiguration
 @EnableWebSecurity
 public class WebSecurityConfigurator extends WebSecurityConfigurerAdapter {
     @Autowired
-    CustomUserDetailsService customUserDetailsService;
+    UserDetailService userDetailService;
 
     @Autowired
     private TokenAuthenticationService tokenAuthenticationService;
@@ -35,7 +36,7 @@ public class WebSecurityConfigurator extends WebSecurityConfigurerAdapter {
     // http://stackoverflow.com/a/28272347 for the differences
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(customUserDetailsService);
+        auth.userDetailsService(userDetailService);
     }
 
     @Override
@@ -62,7 +63,7 @@ public class WebSecurityConfigurator extends WebSecurityConfigurerAdapter {
             .anyRequest().hasRole("USER").and()
 
             // custom JSON based authentication by POST of {"username":"<name>","password":"<password>"} which sets the token header upon authentication
-            .addFilterBefore(new StatelessLoginFilter("/login", tokenAuthenticationService, authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+            .addFilterBefore(new StatelessLoginFilter(tokenAuthenticationService, authenticationManager()), UsernamePasswordAuthenticationFilter.class)
 
             // custom Token based authentication based on the header previously given to the client
             .addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService), UsernamePasswordAuthenticationFilter.class);
