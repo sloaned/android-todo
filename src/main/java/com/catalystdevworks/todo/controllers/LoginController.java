@@ -26,7 +26,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Created by g on 2/26/16.
  */
-@RestController
+/*@RestController
 public class LoginController {
     @Autowired
     CustomAuthenticationProvider authenticationManager;
@@ -42,43 +42,35 @@ public class LoginController {
         Token tk = null;
 ////        System.out.println(String.format("%s  %s",loginRequest.getUsername(),loginRequest.getPassword()));
 //
-        try {
-            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword());
+        //create an authentication token from username and password from the client
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword());
 
-            token.setDetails(new WebAuthenticationDetails(request));
+        token.setDetails(new WebAuthenticationDetails(request));
 
-            Authentication auth = authenticationManager.authenticate(token);
-            SecurityContext securityContext = SecurityContextHolder.getContext();
+        //use the authManager to attempt authenticate
+        Authentication auth = authenticationManager.authenticate(token);
 
-            securityContext.setAuthentication(auth);
-//            securityContext.getSessionCookieConfig().setMaxAge(600);
+        //set the SecurityContext to to the auth state
+        SecurityContext securityContext = SecurityContextHolder.getContext();
+        securityContext.setAuthentication(auth);
 
-            if(auth.isAuthenticated()){
-                HttpSession session = request.getSession(true);
-                session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
+        //if authenticated
+        if(auth.isAuthenticated()){
+            HttpSession session = request.getSession(true);
+            //add the context to the cookie
+            session.setAttribute("SPRING_SECURITY_CONTEXT", securityContext);
 
+            //or generate a token
+            tk = new Token(th.createTokenForUser(usersService.loadUserByUsername(loginRequest.getUsername())));
+            System.out.println("Auth");
+        }else{
+            SecurityContextHolder.getContext().setAuthentication(null);
 
-                tk = new Token(th.createTokenForUser(usersService.loadUserByUsername(loginRequest.getUsername())));
-                System.out.println("Auth");
-            }else{
-                SecurityContextHolder.getContext().setAuthentication(null);
+            System.out.println("cred not right");
 
-                System.out.println("cred not right");
-
-            }
-        } catch (Exception e) {
-//            for (StackTraceElement ee:e.getStackTrace()) {
-//                System.out.printf("%s %s\n", ee.getClassName(),ee.getLineNumber());
-//            }
-//            System.out.println("Error "+e.getMessage());
-            throw e;
         }
-//        TokenHandler th = new TokenHandler(usersService);
-//        Token token = new Token(th.createTokenForUser(usersService.loadUserByUsername(loginRequest.getUsername())));
-       // String re = new ResponseEntity<String>(HttpStatus.OK);
-   //     System.out.printf("Token : %s \n",token.getToken());
-
+       //return the token
         return tk;
     }
-}
+}*/
 
