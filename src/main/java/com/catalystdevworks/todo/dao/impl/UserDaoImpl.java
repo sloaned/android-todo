@@ -1,12 +1,7 @@
 package com.catalystdevworks.todo.dao.impl;
 
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
-import com.catalystdevworks.todo.entities.Task;
 import org.springframework.stereotype.Repository;
 
 import com.catalystdevworks.todo.dao.EntityCrudDao;
@@ -21,7 +16,7 @@ public class UserDaoImpl  extends EntityCrudDao<Users>{
 	}
 
 	public Users getByUsername(String user_email) {
-		return em.createQuery(getSelect()+" x WHERE x.userEmail = :user_email", Users.class)
+		return em.createQuery(getSelectStatement()+" x WHERE x.userEmail = :user_email", Users.class)
 				.setParameter("user_email", user_email)
 				.getSingleResult();
 	}

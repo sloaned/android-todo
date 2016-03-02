@@ -1,21 +1,13 @@
-package com.catalystdevworks.todo.Security;
+package com.catalystdevworks.todo.security;
 
 
-import org.apache.catalina.Context;
-import org.apache.catalina.connector.Connector;
-import org.apache.tomcat.util.descriptor.web.SecurityCollection;
-import org.apache.tomcat.util.descriptor.web.SecurityConstraint;
+import com.catalystdevworks.todo.services.impl.TokenAuthenticationService;
+import com.catalystdevworks.todo.services.impl.UserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerFactory;
-import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -33,7 +25,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 public class WebSecurityConfigurator extends WebSecurityConfigurerAdapter {
     @Autowired
-    CustomUserDetailsService customUserDetailsService;
+    UserDetailService userDetailService;
 
     @Autowired
     private TokenAuthenticationService tokenAuthenticationService;
@@ -45,7 +37,7 @@ public class WebSecurityConfigurator extends WebSecurityConfigurerAdapter {
     // http://stackoverflow.com/a/28272347 for the differences
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(customUserDetailsService);
+        auth.userDetailsService(userDetailService);
     }
 
     @Override

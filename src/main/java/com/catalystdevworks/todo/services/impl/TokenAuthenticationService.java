@@ -1,5 +1,6 @@
-package com.catalystdevworks.todo.Security;
+package com.catalystdevworks.todo.services.impl;
 
+import com.catalystdevworks.todo.security.TokenHandler;
 import com.catalystdevworks.todo.entities.UserAuthentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

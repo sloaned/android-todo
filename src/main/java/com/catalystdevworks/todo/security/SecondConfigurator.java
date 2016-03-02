@@ -1,4 +1,4 @@
-package com.catalystdevworks.todo.Security;
+package com.catalystdevworks.todo.security;
 
 import org.apache.catalina.Context;
 import org.apache.catalina.connector.Connector;
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Sets up the servlet to use ssl and ht
+ * Sets up the servlet to use ssl and https
  */
 @Configuration
 public class SecondConfigurator {

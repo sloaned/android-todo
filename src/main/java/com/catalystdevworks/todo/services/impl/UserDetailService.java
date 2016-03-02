@@ -1,4 +1,4 @@
-package com.catalystdevworks.todo.Security;
+package com.catalystdevworks.todo.services.impl;
 
 import com.catalystdevworks.todo.dao.impl.UserDaoImpl;
 import com.catalystdevworks.todo.entities.Users;
@@ -14,7 +14,7 @@ import java.util.List;
  * Loads a USERS from the database and transforms it to USER
  */
 @Service
-public class CustomUserDetailsService implements UserDetailsService{
+public class UserDetailService implements UserDetailsService {
 
     @Autowired
     private UserDaoImpl dao;

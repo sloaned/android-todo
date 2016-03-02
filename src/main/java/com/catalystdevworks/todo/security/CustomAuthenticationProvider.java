@@ -1,5 +1,6 @@
-package com.catalystdevworks.todo.Security;
+package com.catalystdevworks.todo.security;
 
+import com.catalystdevworks.todo.services.impl.UserDetailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -20,7 +21,7 @@ import java.util.List;
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
-    private CustomUserDetailsService userService;
+    private UserDetailService userService;
 
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 

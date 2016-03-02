@@ -1,7 +1,7 @@
-package com.catalystdevworks.todo.Security;
+package com.catalystdevworks.todo.security;
 
+import com.catalystdevworks.todo.services.impl.TokenAuthenticationService;
 import com.google.common.base.Preconditions;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 

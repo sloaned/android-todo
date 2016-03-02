@@ -1,7 +1,8 @@
-package com.catalystdevworks.todo.Security;
+package com.catalystdevworks.todo.security;
 
 import com.catalystdevworks.todo.entities.LoginRequest;
 import com.catalystdevworks.todo.entities.UserAuthentication;
+import com.catalystdevworks.todo.services.impl.TokenAuthenticationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -51,14 +52,14 @@ class StatelessLoginFilter extends AbstractAuthenticationProcessingFilter {
 											FilterChain chain, Authentication authentication) throws IOException, ServletException {
 
 		// Lookup the complete User object from the database and create an Authentication for it
-		final User authenticatedUser = (User) authentication.getPrincipal();//userDetailsService.loadUserByUsername(authentication.getName());
+		final User authenticatedUser = (User) authentication.getPrincipal();//userDetailService.loadUserByUsername(authentication.getName());
 
 		final UserAuthentication userAuthentication = new UserAuthentication(authenticatedUser);
 
 		// Add the custom token as HTTP header to the response
 		tokenAuthenticationService.addAuthentication(response, userAuthentication);
 
-		// Add the authentication to the Security context
+		// Add the authentication to the security context
 		SecurityContextHolder.getContext().setAuthentication(userAuthentication);
 
 

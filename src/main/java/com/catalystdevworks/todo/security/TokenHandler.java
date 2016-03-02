@@ -1,5 +1,6 @@
-package com.catalystdevworks.todo.Security;
+package com.catalystdevworks.todo.security;
 
+import com.catalystdevworks.todo.services.impl.UserDetailService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public final class TokenHandler {
 
     private final String secret  = "tooManySecrets";
     @Autowired
-    private CustomUserDetailsService userService;
+    private UserDetailService userService;
 
     public User parseUserFromToken(String token) {
         String username = Jwts.parser()
@@ -39,7 +40,7 @@ public final class TokenHandler {
                 .compact();
     }
 
-    public void setUserService(CustomUserDetailsService userService) {
+    public void setUserService(UserDetailService userService) {
         this.userService = userService;
     }
 }
