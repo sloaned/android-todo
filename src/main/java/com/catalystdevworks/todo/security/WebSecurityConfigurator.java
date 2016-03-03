@@ -55,6 +55,7 @@ public class WebSecurityConfigurator extends WebSecurityConfigurerAdapter {
 
             //allow anonymous POSTs to login
             .antMatchers(HttpMethod.POST, "/login.json").permitAll()
+            .antMatchers(HttpMethod.POST, "/login").permitAll()
 
             //defined Admin only API area
             .antMatchers("/task/**").hasRole("USER")
@@ -66,6 +67,6 @@ public class WebSecurityConfigurator extends WebSecurityConfigurerAdapter {
             .addFilterBefore(new StatelessLoginFilter(tokenAuthenticationService, authenticationManager()), UsernamePasswordAuthenticationFilter.class)
 
             // custom Token based authentication based on the header previously given to the client
-            .addFilterBefore(new StatelessAuthenticationFilter(tokenAuthenticationService), UsernamePasswordAuthenticationFilter.class);
+            .addFilterBefore(new com.catalystdevworks.todo.security.StatelessAuthenticationFilter(tokenAuthenticationService), UsernamePasswordAuthenticationFilter.class);
     }
 }
