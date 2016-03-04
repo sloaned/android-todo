@@ -1,8 +1,6 @@
 package com.catalystdevworks.todo.services;
 
 import com.catalystdevworks.todo.dao.EntityCrudDao;
-import com.catalystdevworks.todo.dao.impl.UserDaoImpl;
-import org.springframework.security.core.userdetails.User;
 
 import java.util.List;
 
@@ -15,7 +13,6 @@ public abstract class EntityCrudService<T> {
 		this.dao = dao;
 	}
 
-
 	public List<T> getAllObjects(Integer id){
 		return dao.getAllObjects(id);
 	}
@@ -25,7 +22,11 @@ public abstract class EntityCrudService<T> {
 	}
 
 	public boolean createObject(T object) {
-		return dao.createObject(object);
+		try{
+			return dao.createObject(object);
+		}catch(Exception ex){
+			return false;
+		}
 	}
 
 	public boolean editObject(T object) {
@@ -35,5 +36,5 @@ public abstract class EntityCrudService<T> {
 	public boolean deleteObject(int id) {
 		return dao.deleteObject(id);
 	}
-
+	
 }

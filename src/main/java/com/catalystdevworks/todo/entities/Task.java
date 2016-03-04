@@ -1,7 +1,5 @@
 package com.catalystdevworks.todo.entities;
 
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +7,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -30,8 +28,8 @@ public class Task {
 	@Column(name = "due_date")
 	private String dueDate;
 	
-	@ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
-	private List<Users> user;
+	@OneToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
+	private Users user;
 
 	public int getId() {
 		return id;
@@ -65,11 +63,11 @@ public class Task {
 		this.dueDate = dueDate;
 	}
 
-	public List<Users> getUser() {
+	public Users getUser() {
 		return user;
 	}
 
-	public void setUser(List <Users> user) {
+	public void setUser(Users user) {
 		this.user = user;
 	}
 }
