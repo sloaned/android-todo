@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Authenticats a User via checking username and password matches whats in the database
+ * Authenticates a User via checking username and password matches whats in the database
  */
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
@@ -23,6 +23,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
     @Autowired
     private UserDetailService userService;
 
+    @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 
         String username = authentication.getName();

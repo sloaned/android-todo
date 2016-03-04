@@ -21,7 +21,7 @@ public class TaskController {
 	
 	@RequestMapping(value="/allTasks", method = RequestMethod.GET)
 	public List<Task> getAllTasks(){
-		return taskServiceImpl.getAllObjects(null);
+		return taskServiceImpl.getAllObjects();
 	}
 	
 	@RequestMapping(value=EndPointConstants.TASK_GET_DELETE_ENDPOINT, method = RequestMethod.GET)

@@ -1,6 +1,8 @@
 package com.catalystdevworks.todo.services;
 
 import com.catalystdevworks.todo.dao.EntityCrudDao;
+import org.springframework.beans.propertyeditors.StringArrayPropertyEditor;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.util.List;
 
@@ -13,7 +15,8 @@ public abstract class EntityCrudService<T> {
 		this.dao = dao;
 	}
 
-	public List<T> getAllObjects(Integer id){
+	public List<T> getAllObjects(){
+		Integer id = (Integer) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		return dao.getAllObjects(id);
 	}
 
