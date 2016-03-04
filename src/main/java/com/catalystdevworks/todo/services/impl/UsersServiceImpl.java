@@ -22,4 +22,13 @@ public class UsersServiceImpl extends EntityCrudService<Users>{
 		System.out.println("CALLED GETBYUSERNAME");
 		return ((UserDaoImpl)dao).getByUsername(username);
 	}
+	
+	//The purpose of this method is to obfuscate the users password
+	@Override
+	public Users getSingleObject(int id){
+		Users requestedUser = super.getSingleObject(id);
+		requestedUser.setPassword("");
+		return requestedUser;
+	}
+	
 }

@@ -21,6 +21,7 @@ public abstract class EntityCrudDao<T> {
 		this.table = entity.getSimpleName();
 		this.entity = entity;
 	}
+	
 	protected String getSelectStatement(){
 		return "SELECT x from "+ table;
 	}
@@ -35,8 +36,13 @@ public abstract class EntityCrudDao<T> {
 	}
 
 	public boolean createObject(T object) {
-		em.persist(object);
-		return true;
+		try{
+			em.persist(object);
+			return true;
+		}catch(Exception e){
+			System.out.println("An error occured on entity creation");
+			return false;
+		}
 	}
 
 	public boolean editObject(T object) {

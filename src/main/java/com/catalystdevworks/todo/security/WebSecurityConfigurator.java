@@ -54,7 +54,7 @@ public class WebSecurityConfigurator extends WebSecurityConfigurerAdapter {
             .antMatchers("/resources/**").permitAll()
 
             //allow anonymous POSTs to login
-            .antMatchers(HttpMethod.POST, "/login.json").permitAll()
+            .antMatchers(HttpMethod.POST, "/login").permitAll()
 
             //defined Admin only API area
             .antMatchers("/task/**").hasRole("USER")
