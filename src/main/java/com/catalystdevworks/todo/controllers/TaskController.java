@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.catalystdevworks.todo.entities.Task;
-import com.catalystdevworks.todo.services.EntityCrudService;
 import com.catalystdevworks.todo.utility.EndPointConstants;
 
 @RestController
@@ -22,7 +21,7 @@ public class TaskController {
 	
 	@RequestMapping(value="/allTasks", method = RequestMethod.GET)
 	public List<Task> getAllTasks(){
-		return null;
+		return taskServiceImpl.getAllObjects(null);
 	}
 	
 	@RequestMapping(value=EndPointConstants.TASK_GET_DELETE_ENDPOINT, method = RequestMethod.GET)

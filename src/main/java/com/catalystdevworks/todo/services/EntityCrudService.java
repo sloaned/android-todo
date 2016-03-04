@@ -36,5 +36,4 @@ public abstract class EntityCrudService<T> {
 	public boolean deleteObject(int id) {
 		return dao.deleteObject(id);
 	}
-	
 }
