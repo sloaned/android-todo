@@ -49,7 +49,13 @@ class StatelessLoginFilter extends AbstractAuthenticationProcessingFilter {
 		final UsernamePasswordAuthenticationToken loginToken = new UsernamePasswordAuthenticationToken
 				(user.getUsername(), user.getPassword());
 		//attempt authentication and return the result
-		return getAuthenticationManager().authenticate(loginToken);
+		Authentication authResponse = getAuthenticationManager().authenticate(loginToken);
+
+
+		System.out.println("response: " + authResponse.toString());
+
+
+		return authResponse;
 	}
 
 	@Override
@@ -69,7 +75,6 @@ class StatelessLoginFilter extends AbstractAuthenticationProcessingFilter {
 
 
 		System.out.println("Successful authentication!");
-
 
 	}
 }
