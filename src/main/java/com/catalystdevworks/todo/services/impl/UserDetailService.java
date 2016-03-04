@@ -2,10 +2,10 @@ package com.catalystdevworks.todo.services.impl;
 
 import com.catalystdevworks.todo.dao.impl.UserDaoImpl;
 import com.catalystdevworks.todo.entities.Users;
+import com.catalystdevworks.todo.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ public class UserDetailService implements UserDetailsService {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
         
-        return new User(user.getUserEmail(),user.getPassword(),true,true,true,true,authorities);
+        return new User(user.getUserId(),user.getUserEmail(),user.getPassword(),true,true,true,true,authorities);
     }
 
     public UserDaoImpl getDao() {

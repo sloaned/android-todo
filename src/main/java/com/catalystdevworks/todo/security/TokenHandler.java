@@ -1,12 +1,12 @@
 package com.catalystdevworks.todo.security;
 
+import com.catalystdevworks.todo.entities.User;
 import com.catalystdevworks.todo.services.impl.UserDetailService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
 
 /**

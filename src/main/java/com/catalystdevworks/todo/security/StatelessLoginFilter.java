@@ -1,6 +1,7 @@
 package com.catalystdevworks.todo.security;
 
 import com.catalystdevworks.todo.entities.LoginRequest;
+import com.catalystdevworks.todo.entities.User;
 import com.catalystdevworks.todo.entities.UserAuthentication;
 import com.catalystdevworks.todo.services.impl.TokenAuthenticationService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -9,7 +10,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 

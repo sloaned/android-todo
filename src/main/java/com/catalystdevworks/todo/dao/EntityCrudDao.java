@@ -27,7 +27,8 @@ public abstract class EntityCrudDao<T> {
 	}
 
 	public List<T> getAllObjects(Integer id){
-		return em.createQuery(getSelectStatement() +" x", entity).getResultList();
+		return em.createQuery(getSelectStatement() +" x where user.id = :id", entity)
+				.setParameter("id",id).getResultList();
 	}
 
 	public T getSingleObject(int id) {

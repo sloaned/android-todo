@@ -2,8 +2,6 @@ package com.catalystdevworks.todo.entities;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-
 import java.util.Collection;
 
 public class UserAuthentication implements Authentication {
@@ -14,6 +12,7 @@ public class UserAuthentication implements Authentication {
     public UserAuthentication(User user) {
         this.user = user;
     }
+
 
     @Override
     public String getName() {
@@ -26,7 +25,7 @@ public class UserAuthentication implements Authentication {
     }
 
     @Override
-    public Object getCredentials() {
+    public String getCredentials() {
         return user.getPassword();
     }
 
@@ -36,8 +35,8 @@ public class UserAuthentication implements Authentication {
     }
 
     @Override
-    public Object getPrincipal() {
-        return user.getUsername();
+    public Integer getPrincipal() {
+        return user.getId();
     }
 
     @Override
