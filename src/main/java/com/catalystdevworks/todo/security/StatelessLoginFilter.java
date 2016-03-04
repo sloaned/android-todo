@@ -44,7 +44,7 @@ class StatelessLoginFilter extends AbstractAuthenticationProcessingFilter {
 		final LoginRequest user = new ObjectMapper().readValue(request.getInputStream(), LoginRequest.class);
 
 		System.out.println("user: " + user.getUsername() + " " + user.getPassword());
-
+		
 		//create a Token with the username and password from the client
 		final UsernamePasswordAuthenticationToken loginToken = new UsernamePasswordAuthenticationToken
 				(user.getUsername(), user.getPassword());

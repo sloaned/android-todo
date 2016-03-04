@@ -26,6 +26,7 @@ public class UsersController {
 	@RequestMapping(value=EndPointConstants.USER_GET_DELETE_ENDPOINT, method = RequestMethod.GET)
 	public Users getSingleUser(@PathVariable int id){
 		return usersServiceImpl.getSingleObject(id);
+		
 	}
 	
 	@RequestMapping(value=EndPointConstants.USER_POST_PUT_ENDPOINT, method = RequestMethod.POST)

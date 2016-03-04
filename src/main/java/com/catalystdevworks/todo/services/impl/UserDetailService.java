@@ -24,7 +24,7 @@ public class UserDetailService implements UserDetailsService {
         Users user = dao.getByUsername(username);
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-
+        
         return new User(user.getUserEmail(),user.getPassword(),true,true,true,true,authorities);
     }
 
