@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Enumeration;
 
 /**
  * Gets a token from the header OR adds it to the header if this is the first time
@@ -32,7 +33,16 @@ public class TokenAuthenticationService {
     }
 
     public Authentication getAuthentication(HttpServletRequest request) {
+        System.out.println("here we are in the tokenAuthenticationService");
+        Enumeration<String> headerNames = request.getHeaderNames();
+        System.out.println("here are the headers: ");
+        while (headerNames.hasMoreElements()) {
+            String headerName = headerNames.nextElement();
+            System.out.println(headerName + ": " + request.getHeader(headerName));
+
+        }
         final String token = request.getHeader(AUTH_HEADER_NAME);
+        System.out.println("The token = " + token);
 
         if (token != null) {
             final User user = tokenHandler.parseUserFromToken(token);

@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import com.catalystdevworks.todo.entities.Task;
 import com.catalystdevworks.todo.services.EntityCrudService;
 
+import java.util.List;
+
 @Service
 public class TaskServiceImpl extends EntityCrudService<Task> {
 	
@@ -22,4 +24,16 @@ public class TaskServiceImpl extends EntityCrudService<Task> {
 		task.getUser().setPassword("");
 		return task;
 	}
+
+	@Override
+	public List<Task> getAllObjects() {
+        List<Task> tasks = super.getAllObjects();
+        System.out.println("getting all those user objects");
+        for (Task task : tasks) {
+            System.out.println("user = " + task.getUser().getUserEmail());
+            task.getUser().setPassword("");
+        }
+        return tasks;
+
+    }
 }
