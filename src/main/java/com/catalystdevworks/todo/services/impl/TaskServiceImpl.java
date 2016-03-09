@@ -1,6 +1,7 @@
 package com.catalystdevworks.todo.services.impl;
 
 import com.catalystdevworks.todo.dao.impl.TaskDaoImpl;
+import com.catalystdevworks.todo.dao.impl.UserDaoImpl;
 import com.catalystdevworks.todo.entities.User;
 import com.catalystdevworks.todo.entities.Users;
 import com.catalystdevworks.todo.security.TokenHandler;
@@ -20,6 +21,8 @@ public class TaskServiceImpl extends EntityCrudService<Task> {
 	public TaskServiceImpl(TaskDaoImpl dao) {
 		super(dao);
 	}
+
+
 	
 	//The purpose of this method is to obfuscate the users password
 	@Override
@@ -38,11 +41,16 @@ public class TaskServiceImpl extends EntityCrudService<Task> {
         return tasks;
 
     }
-
+/*
 	@Override
 	public Task createObject(Task task) {
-		Users user = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+		System.out.println("principal user = " + SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+		int userId = (int) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		UserDaoImpl userDao = new UserDaoImpl();
+		Users user = userDao.getSingleObject(userId);
+		System.out.println("user has been set, user = " + user);
 		task.setUser(user);
 		return super.createObject(task);
-	}
+	}  */
 }

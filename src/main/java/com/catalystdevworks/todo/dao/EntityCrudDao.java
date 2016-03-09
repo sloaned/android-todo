@@ -27,21 +27,26 @@ public abstract class EntityCrudDao<T> {
 	}
 
 	public List<T> getAllObjects(Integer id){
+		System.out.println("in getAllObjects, userId = " + id + ", entity = " + entity + ", table = " + table);
+        System.out.println("em = " + em);
 		return em.createQuery(getSelectStatement() +" x where user.id = :id", entity)
 				.setParameter("id",id).getResultList();
 	}
 
 	public T getSingleObject(int id) {
+		System.out.println("in getSingleObject, id = " + id);
+		System.out.println("entity = " + entity + ", table = " + table);
+        System.out.println("em = " + em);
 		return em.createQuery(getSelectStatement() +" x where x.id = :id", entity)
 				.setParameter("id",id).getSingleResult();
 	}
 
 	public T createObject(T object) {
-		try{
+		try {
 			em.persist(object);
 			return object;
-		}catch(Exception e){
-			System.out.println("An error occured on entity creation");
+		} catch (Exception e) {
+			System.out.println("An error occurred on entity creation");
 			return null;
 		}
 	}
