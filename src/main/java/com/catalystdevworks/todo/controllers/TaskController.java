@@ -30,7 +30,7 @@ public class TaskController {
 	}
 	
 	@RequestMapping(value=EndPointConstants.TASK_POST_PUT_ENDPOINT, method = RequestMethod.POST)
-	public boolean createTask(@RequestBody Task task){
+	public Task createTask(@RequestBody Task task){
 		return taskServiceImpl.createObject(task);
 	}
 	

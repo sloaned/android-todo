@@ -7,12 +7,12 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
 @Entity
 public class Task {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
@@ -27,8 +27,17 @@ public class Task {
 	
 	@Column(name = "due_date")
 	private String dueDate;
+
+	@Column(name = "location")
+	private String locationName;
+
+	@Column
+	private double latitude;
+
+	@Column
+	private double longitude;
 	
-	@OneToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
+	@ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
 	private Users user;
 
 	public int getId() {
@@ -62,6 +71,18 @@ public class Task {
 	public void setDueDate(String dueDate) {
 		this.dueDate = dueDate;
 	}
+
+	public String getLocationName() { return locationName; }
+
+	public void setLocationName(String locationName) { this.locationName = locationName; }
+
+	public double getLatitude() { return latitude; }
+
+	public void setLatitude(double latitude) { this.latitude = latitude; }
+
+	public double getLongitude() { return longitude; }
+
+	public void setLongitude(double longitude) { this.longitude = longitude; }
 
 	public Users getUser() {
 		return user;

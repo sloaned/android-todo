@@ -29,7 +29,7 @@ public class UsersController {
 	}
 	
 	@RequestMapping(value=EndPointConstants.USER_POST_PUT_ENDPOINT, method = RequestMethod.POST)
-	public boolean createUser(@RequestBody Users users){
+	public Users createUser(@RequestBody Users users){
 		return usersServiceImpl.createObject(users);
 	}
 	

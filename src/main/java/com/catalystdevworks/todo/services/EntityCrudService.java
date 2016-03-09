@@ -24,11 +24,11 @@ public abstract class EntityCrudService<T> {
 		return dao.getSingleObject(id);
 	}
 
-	public boolean createObject(T object) {
+	public T createObject(T object) {
 		try{
 			return dao.createObject(object);
 		}catch(Exception ex){
-			return false;
+			return null;
 		}
 	}
 

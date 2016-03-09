@@ -1,7 +1,11 @@
 package com.catalystdevworks.todo.services.impl;
 
 import com.catalystdevworks.todo.dao.impl.TaskDaoImpl;
+import com.catalystdevworks.todo.entities.User;
+import com.catalystdevworks.todo.entities.Users;
+import com.catalystdevworks.todo.security.TokenHandler;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.catalystdevworks.todo.entities.Task;
@@ -28,12 +32,17 @@ public class TaskServiceImpl extends EntityCrudService<Task> {
 	@Override
 	public List<Task> getAllObjects() {
         List<Task> tasks = super.getAllObjects();
-        System.out.println("getting all those user objects");
         for (Task task : tasks) {
-            System.out.println("user = " + task.getUser().getUserEmail());
             task.getUser().setPassword("");
         }
         return tasks;
 
     }
+
+	@Override
+	public Task createObject(Task task) {
+		Users user = (Users) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		task.setUser(user);
+		return super.createObject(task);
+	}
 }

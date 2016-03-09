@@ -36,13 +36,13 @@ public abstract class EntityCrudDao<T> {
 				.setParameter("id",id).getSingleResult();
 	}
 
-	public boolean createObject(T object) {
+	public T createObject(T object) {
 		try{
 			em.persist(object);
-			return true;
+			return object;
 		}catch(Exception e){
 			System.out.println("An error occured on entity creation");
-			return false;
+			return null;
 		}
 	}
 
