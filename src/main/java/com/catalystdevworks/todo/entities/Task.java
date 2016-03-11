@@ -36,6 +36,9 @@ public class Task {
 
 	@Column
 	private double longitude;
+
+	@Column
+	private String timeZone;
 	
 	@ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
 	private Users user;
@@ -84,6 +87,10 @@ public class Task {
 
 	public void setLongitude(double longitude) { this.longitude = longitude; }
 
+	public String getTimeZone() { return timeZone; }
+
+	public void setTimeZone(String timeZone) { this.timeZone = timeZone; }
+
 	public Users getUser() {
 		return user;
 	}
@@ -91,4 +98,5 @@ public class Task {
 	public void setUser(Users user) {
 		this.user = user;
 	}
+
 }
