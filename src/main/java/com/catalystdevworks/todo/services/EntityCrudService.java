@@ -25,6 +25,7 @@ public abstract class EntityCrudService<T> {
 	}
 
 	public T createObject(T object) {
+        System.out.println("in the createObject service");
 		try{
 			return dao.createObject(object);
 		}catch(Exception ex){
@@ -33,10 +34,12 @@ public abstract class EntityCrudService<T> {
 	}
 
 	public boolean editObject(T object) {
+        System.out.println("in the editObject service");
 		return dao.editObject(object);
 	}
 
 	public boolean deleteObject(int id) {
+		System.out.println("The id to delete = " + id);
 		return dao.deleteObject(id);
 	}
 }

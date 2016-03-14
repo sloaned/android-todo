@@ -37,5 +37,17 @@ public class TaskDaoImpl extends EntityCrudDao<Task>{
 
 	}
 
+    @Override
+    public boolean editObject(Task task) {
+        int userId = (int) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Users user = em.createQuery("SELECT x from Users x where x.userId = :id", Users.class)
+                .setParameter("id",userId).getSingleResult();
+
+        System.out.println("got user, user = " + user);
+        task.setUser(user);
+        em.merge(task);
+        return true;
+    }
+
 }
 

@@ -9,5 +9,5 @@ public class EndPointConstants {
 	//task endpoints
 	public final static String TASK_GET_DELETE_ENDPOINT = "/task/{id}";
 	public final static String TASK_POST_PUT_ENDPOINT = "/task";
-	
+	public final static String TASK_PUT_ENDPOINT = "/editTask";
 }

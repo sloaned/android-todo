@@ -34,8 +34,9 @@ public class TaskController {
 		return taskServiceImpl.createObject(task);
 	}
 	
-	@RequestMapping(value=EndPointConstants.TASK_POST_PUT_ENDPOINT, method = RequestMethod.PUT)
+	@RequestMapping(value=EndPointConstants.TASK_PUT_ENDPOINT, method = RequestMethod.POST)
 	public boolean editTask(@RequestBody Task task){
+		System.out.println("in editTask controller, task id = " + task.getId());
 		return taskServiceImpl.editObject(task);
 	}
 	
