@@ -1,7 +1,9 @@
 package com.catalystdevworks.todo.dao.impl;
 
+import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 
+import com.catalystdevworks.todo.entities.Participant;
 import com.catalystdevworks.todo.entities.Users;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
@@ -19,14 +21,25 @@ public class TaskDaoImpl extends EntityCrudDao<Task>{
 
 	@Override
 	public Task createObject(Task task) {
-        System.out.println("in createObject, em = " + em);
-		int userId = (int) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        System.out.println("userId = " + userId);
+
+        System.out.println("in createObject, task name = " + task.getTaskTitle());
+
+        int userId = (int) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		Users user = em.createQuery("SELECT x from Users x where x.userId = :id", Users.class)
                 .setParameter("id",userId).getSingleResult();
-
-        System.out.println("got user, user = " + user);
         task.setUser(user);
+
+        for (Participant p : task.getParticipants()) {
+            try {
+                if (p.getParticipantName() != null) {
+                    Integer id = em.createQuery("SELECT p.id FROM Participant p WHERE p.participantName = :name", Integer.class).setParameter("name", p.getParticipantName()).getSingleResult();
+                    p.setId(id);
+                }
+            } catch (NoResultException e) {
+                em.persist(p);
+            }
+        }
+
         try {
             em.persist(task);
             return task;
@@ -45,6 +58,18 @@ public class TaskDaoImpl extends EntityCrudDao<Task>{
 
         System.out.println("got user, user = " + user);
         task.setUser(user);
+
+        for (Participant p : task.getParticipants()) {
+            try {
+                if (p.getParticipantName() != null) {
+                    Integer id = em.createQuery("SELECT p.id FROM Participant p WHERE p.participantName = :name", Integer.class).setParameter("name", p.getParticipantName()).getSingleResult();
+                    p.setId(id);
+                }
+            } catch (NoResultException e) {
+                em.persist(p);
+            }
+        }
+
         em.merge(task);
         return true;
     }

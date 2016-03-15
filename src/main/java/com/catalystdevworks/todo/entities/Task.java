@@ -1,14 +1,8 @@
 package com.catalystdevworks.todo.entities;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Entity
 public class Task {
@@ -42,6 +36,9 @@ public class Task {
 	
 	@ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
 	private Users user;
+
+	@ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
+	private Set<Participant> participants;
 
 	public int getId() {
 		return id;
@@ -98,5 +95,9 @@ public class Task {
 	public void setUser(Users user) {
 		this.user = user;
 	}
+
+    public Set<Participant> getParticipants() { return participants; }
+
+    public void setParticipants(Set<Participant> participants) { this.participants = participants; }
 
 }
