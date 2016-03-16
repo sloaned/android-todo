@@ -30,8 +30,11 @@ public class TaskDaoImpl extends EntityCrudDao<Task>{
         task.setUser(user);
 
         for (Participant p : task.getParticipants()) {
+
+            System.out.println("participant!");
             try {
                 if (p.getParticipantName() != null) {
+                    System.out.println(p.getParticipantName());
                     Integer id = em.createQuery("SELECT p.id FROM Participant p WHERE p.participantName = :name", Integer.class).setParameter("name", p.getParticipantName()).getSingleResult();
                     p.setId(id);
                 }
