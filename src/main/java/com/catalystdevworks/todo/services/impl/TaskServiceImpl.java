@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.catalystdevworks.todo.entities.Task;
 import com.catalystdevworks.todo.services.EntityCrudService;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -41,6 +42,15 @@ public class TaskServiceImpl extends EntityCrudService<Task> {
         return tasks;
 
     }
+
+	public List<Task> getTasksToSync() {
+		Integer id = (Integer) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		List<Task> tasks = ((TaskDaoImpl)dao).getTasksToSync(id);
+		for (Task task : tasks) {
+			task.getUser().setPassword("");
+		}
+		return tasks;
+	}
 /*
 	@Override
 	public Task createObject(Task task) {
@@ -53,4 +63,12 @@ public class TaskServiceImpl extends EntityCrudService<Task> {
 		task.setUser(user);
 		return super.createObject(task);
 	}  */
+
+    @Override
+    public boolean editObject(Task task) {
+        Date date = new Date();
+        long milliseconds = date.getTime();
+        task.setLastModifiedDate(milliseconds);
+        return super.editObject(task);
+    }
 }

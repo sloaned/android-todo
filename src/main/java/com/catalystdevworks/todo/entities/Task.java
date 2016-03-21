@@ -22,6 +22,12 @@ public class Task {
 	@Column(name = "due_date")
 	private String dueDate;
 
+	@Column(name = "last_modified_date")
+	private long lastModifiedDate;
+
+	@Column(name= "sync_date")
+	private long syncDate;
+
 	@Column(name = "location")
 	private String locationName;
 
@@ -87,6 +93,14 @@ public class Task {
 	public String getTimeZone() { return timeZone; }
 
 	public void setTimeZone(String timeZone) { this.timeZone = timeZone; }
+
+	public long getLastModifiedDate() { return lastModifiedDate; }
+
+	public void setLastModifiedDate(long date) { lastModifiedDate = date; }
+
+	public long getSyncDate() { return syncDate; }
+
+	public void setSyncDate(long syncDate) { this.syncDate = syncDate; }
 
 	public Users getUser() {
 		return user;

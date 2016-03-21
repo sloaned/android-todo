@@ -41,7 +41,10 @@ public class TaskController {
 	}
 	
 	@RequestMapping(value=EndPointConstants.TASK_GET_DELETE_ENDPOINT, method=RequestMethod.DELETE)
-	public boolean deleteStore(@PathVariable int id){
+	public boolean deleteTask(@PathVariable int id){
 		return taskServiceImpl.deleteObject(id);
 	}
+
+	@RequestMapping(value=EndPointConstants.TASK_SYNC_ENDPOINT, method=RequestMethod.GET)
+	public List<Task> getTasksToSync() { return taskServiceImpl.getTasksToSync(); }
 }
