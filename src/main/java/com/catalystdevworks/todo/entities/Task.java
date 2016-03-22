@@ -20,7 +20,7 @@ public class Task {
 	private String taskDetails;
 	
 	@Column(name = "due_date")
-	private String dueDate;
+	private long dueDate;
 
 	@Column(name = "last_modified_date")
 	private long lastModifiedDate;
@@ -70,11 +70,11 @@ public class Task {
 		this.taskDetails = taskDetails;
 	}
 
-	public String getDueDate() {
+	public long getDueDate() {
 		return dueDate;
 	}
 
-	public void setDueDate(String dueDate) {
+	public void setDueDate(long dueDate) {
 		this.dueDate = dueDate;
 	}
 

@@ -80,30 +80,6 @@ public class TaskDaoImpl extends EntityCrudDao<Task>{
         return true;
     }
 
-    /*
-    public boolean changeSyncDate(Task task) {
-        int userId = (int) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Users user = em.createQuery("SELECT x from Users x where x.userId = :id", Users.class)
-                .setParameter("id",userId).getSingleResult();
-
-        System.out.println("got user, user = " + user);
-        task.setUser(user);
-
-        for (Participant p : task.getParticipants()) {
-            try {
-                if (p.getParticipantName() != null) {
-                    Integer id = em.createQuery("SELECT p.id FROM Participant p WHERE p.participantName = :name", Integer.class).setParameter("name", p.getParticipantName()).getSingleResult();
-                    p.setId(id);
-                }
-            } catch (NoResultException e) {
-                em.persist(p);
-            }
-        }
-
-        em.merge(task);
-        return true;
-    }   */
-
     public List<Task> getTasksToSync(Integer id) {
         List<Task> tasks =  em.createQuery(getSelectStatement() +" x WHERE user.id = :id AND last_modified_date > sync_date", Task.class)
                 .setParameter("id",id).getResultList();
