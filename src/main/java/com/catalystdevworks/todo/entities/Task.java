@@ -39,6 +39,9 @@ public class Task {
 
 	@Column
 	private String timeZone;
+
+	@Column
+	private boolean completed;
 	
 	@ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
 	private Users user;
@@ -109,6 +112,10 @@ public class Task {
 	public void setUser(Users user) {
 		this.user = user;
 	}
+
+	public boolean isCompleted() { return completed; }
+
+	public void setCompleted(boolean completed) { this.completed = completed; }
 
     public Set<Participant> getParticipants() { return participants; }
 
