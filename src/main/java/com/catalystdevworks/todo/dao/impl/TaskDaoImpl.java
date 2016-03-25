@@ -22,6 +22,22 @@ public class TaskDaoImpl extends EntityCrudDao<Task>{
 	}
 
 
+    @Override
+    public List<Task> getAllObjects(Integer id) {
+
+        List<Task> tasks = em.createQuery(getSelectStatement() +" x where user.id = :id", Task.class)
+                .setParameter("id",id).getResultList();
+
+        Date date = new Date();
+        long ms = date.getTime();
+        for (Task task : tasks) {
+            task.setSyncDate(ms);
+            editObject(task);
+        }
+        return tasks;
+
+    }
+
 	@Override
 	public Task createObject(Task task) {
 
